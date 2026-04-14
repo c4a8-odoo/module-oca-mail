@@ -1,11 +1,9 @@
 # Copyright 2018-22 ForgeFlow S.L.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-import os
 from datetime import date
 
 from odoo.exceptions import ValidationError
 from odoo.fields import Command
-from odoo.modules.migration import load_script
 from odoo.tests import Form
 from odoo.tests.common import TransactionCase
 
@@ -24,7 +22,7 @@ class TestMailActivityTeam(TransactionCase):
                 "name": "Employee",
                 "login": "csu",
                 "email": "crmuser@yourcompany.com",
-                "groups_id": [
+                "group_ids": [
                     Command.set(
                         [
                             cls.env.ref("base.group_user").id,
@@ -40,7 +38,7 @@ class TestMailActivityTeam(TransactionCase):
                 "name": "Employee 2",
                 "login": "csu2",
                 "email": "crmuser2@yourcompany.com",
-                "groups_id": [Command.set([cls.env.ref("base.group_user").id])],
+                "group_ids": [Command.set([cls.env.ref("base.group_user").id])],
             }
         )
         cls.employee3 = cls.env["res.users"].create(
@@ -49,7 +47,7 @@ class TestMailActivityTeam(TransactionCase):
                 "name": "Employee 3",
                 "login": "csu3",
                 "email": "crmuser3@yourcompany.com",
-                "groups_id": [Command.set([cls.env.ref("base.group_user").id])],
+                "group_ids": [Command.set([cls.env.ref("base.group_user").id])],
             }
         )
         # Create Activity Types
@@ -557,7 +555,7 @@ class TestMailActivityTeam(TransactionCase):
         # Create a non-team activity for our second employee, for a second partner
         self.team1.member_ids |= self.employee2
         partner2 = self.partner_client.copy()
-        self.employee2.groups_id += self.env.ref("base.group_partner_manager")
+        self.employee2.group_ids += self.env.ref("base.group_partner_manager")
 
         # Craft the activity without a team
         act3 = (
@@ -593,24 +591,6 @@ class TestMailActivityTeam(TransactionCase):
             ),
             set(self.partner_client.ids),
         )
-
-    def test_migration(self):
-        """Check that the 18.0.1.0.0 migration script runs without error"""
-        rule = self.env.ref("mail_activity_team.mail_activity_rule_my_team")
-        rule.perm_create = True
-
-        # Run the migration script
-        pyfile = os.path.join(
-            "mail_activity_team",
-            "migrations",
-            "18.0.1.0.0",
-            "post-migration.py",
-        )
-        name, ext = os.path.splitext(os.path.basename(pyfile))
-        mod = load_script(pyfile, name)
-        mod.migrate(self.env.cr, "18.0.1.0.0")
-
-        self.assertFalse(rule.perm_create)
 
     def test_mail_activity_plan_ui_logic(self):
         """Check team/team user consistency in plan template view"""

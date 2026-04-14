@@ -16,7 +16,7 @@ class TestMailActivity(BaseCommon):
                 "name": "Employee",
                 "login": "csu",
                 "email": "crmuser@yourcompany.com",
-                "groups_id": [
+                "group_ids": [
                     Command.set(
                         [
                             cls.env.ref("base.group_user").id,
@@ -32,7 +32,7 @@ class TestMailActivity(BaseCommon):
                 "name": "Employee 2",
                 "login": "csu2",
                 "email": "crmuser2@yourcompany.com",
-                "groups_id": [Command.set([cls.env.ref("base.group_user").id])],
+                "group_ids": [Command.set([cls.env.ref("base.group_user").id])],
             }
         )
         cls.partner_ir_model = cls.env["ir.model"]._get("res.partner")
