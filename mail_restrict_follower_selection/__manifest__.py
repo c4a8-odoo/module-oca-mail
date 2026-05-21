@@ -13,5 +13,10 @@
     "depends": ["mail"],
     "data": ["data/ir_config_parameter.xml", "data/ir_actions.xml"],
     "demo": ["demo/ir_config_parameter_demo.xml"],
+    "assets": {
+        "web.assets_backend": [
+            "mail_restrict_follower_selection/static/src/follower_list_patch.js",
+        ],
+    },
     "installable": True,
 }

@@ -76,3 +76,18 @@ class TestMailRestrictFollowerSelection(TransactionCase):
             domain = field.get("domain")
             self.assertTrue(domain.find("country_id") > 0)
             self.assertTrue(domain.find(str(self.switzerland.id)) > 0)
+
+    def test_get_view_uses_view_ref_context_key(self):
+        """The per-model domain must be applied when the model is forwarded
+        through `restrict_follower_res_model_view_ref` (the only key shape
+        that survives the web client's loadViews context filtering)."""
+        result = (
+            self.env["mail.followers.edit"]
+            .with_context(restrict_follower_res_model_view_ref="res.partner")
+            .get_view(view_type="form")
+        )
+        for field in etree.fromstring(result["arch"]).xpath(
+            '//field[@name="partner_ids"]'
+        ):
+            domain = field.get("domain")
+            self.assertIn("category_id.name", domain)

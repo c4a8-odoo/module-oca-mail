@@ -18,7 +18,16 @@ class MailFollowersEdit(models.TransientModel):
     @api.model
     def _mail_restrict_follower_selection_get_domain(self, res_model=None):
         if not res_model:
-            res_model = self.env.context.get("default_res_model")
+            # `restrict_follower_res_model_view_ref` is set by the
+            # FollowerList JS patch; it is the only way to forward the
+            # followed record's model to `get_view`, since the web client
+            # strips all context keys except `lang` and `*_view_ref`
+            # before calling `get_views`. `default_res_model` is kept as a
+            # fallback for callers reached without the JS patch, e.g.
+            # act_window bindings like helpdesk's `Add/remove followers`.
+            res_model = self.env.context.get(
+                "restrict_follower_res_model_view_ref"
+            ) or self.env.context.get("default_res_model")
         parameter_name = "mail_restrict_follower_selection.domain"
         IrConfigParameter = self.env["ir.config_parameter"].sudo()
         parameter_domain = IrConfigParameter.get_param(
