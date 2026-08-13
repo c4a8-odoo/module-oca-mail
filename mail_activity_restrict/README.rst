@@ -39,6 +39,9 @@ activity as done.
 The restriction is enforced through the activity access check, so it
 applies consistently to write and done flows.
 
+Activities without an assigned user are not restricted, otherwise nobody
+could edit them anymore.
+
 **Table of contents**
 
 .. contents::
@@ -56,6 +59,14 @@ To use this module:
 
 From now on, only the assigned user can modify or complete activities of
 this type.
+
+Good to know:
+
+-  Anyone can still create such an activity and assign it to somebody
+   else.
+-  Only the assigned user can change it afterwards, so handing it over
+   is final.
+-  If no user is assigned, the standard Odoo rules apply.
 
 Bug Tracker
 ===========

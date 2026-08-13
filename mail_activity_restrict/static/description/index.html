@@ -380,6 +380,8 @@ activity type is enabled, only the assigned user can edit or mark the
 activity as done.</p>
 <p>The restriction is enforced through the activity access check, so it
 applies consistently to write and done flows.</p>
+<p>Activities without an assigned user are not restricted, otherwise nobody
+could edit them anymore.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -402,6 +404,14 @@ applies consistently to write and done flows.</p>
 </ol>
 <p>From now on, only the assigned user can modify or complete activities of
 this type.</p>
+<p>Good to know:</p>
+<ul class="simple">
+<li>Anyone can still create such an activity and assign it to somebody
+else.</li>
+<li>Only the assigned user can change it afterwards, so handing it over
+is final.</li>
+<li>If no user is assigned, the standard Odoo rules apply.</li>
+</ul>
 </div>
 <div class="section" id="bug-tracker">
 <h2><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h2>
