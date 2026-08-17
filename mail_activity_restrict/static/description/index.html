@@ -376,10 +376,15 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/mail/tree/19.0/mail_activity_restrict"><img alt="OCA/mail" src="https://img.shields.io/badge/github-OCA%2Fmail-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/mail-19-0/mail-19-0-mail_activity_restrict"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/mail&amp;target_branch=19.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>When the activity type option “Restrict Write to Assigned User” on an
-activity type is enabled, only the assigned user can edit or mark the
-activity as done.</p>
-<p>The restriction is enforced through the activity access check, so it
-applies consistently to write and done flows.</p>
+activity type is enabled, only the assigned user sees the buttons to
+edit, cancel or complete the activity.</p>
+<p>The restriction is applied on the field Odoo uses to show those buttons,
+so it does not get in the way of other modules working on activities.</p>
+<p>This is a user interface restriction and not an access right. Users who
+may change the activity through the standard Odoo rules can still do so
+elsewhere, for example from the Activity Overview.</p>
+<p>Activities without an assigned user are not restricted, otherwise nobody
+could handle them anymore.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -400,8 +405,17 @@ applies consistently to write and done flows.</p>
 <li>Enable “Restrict Write to Assigned User”.</li>
 <li>Save.</li>
 </ol>
-<p>From now on, only the assigned user can modify or complete activities of
-this type.</p>
+<p>From now on, only the assigned user sees the buttons to edit, cancel or
+complete activities of this type.</p>
+<p>Good to know:</p>
+<ul class="simple">
+<li>Anyone can still create such an activity and assign it to somebody
+else.</li>
+<li>The buttons are only hidden. Users who are allowed to change the
+activity by the standard Odoo rules can still do so outside of the
+chatter.</li>
+<li>If no user is assigned, no restriction is applied.</li>
+</ul>
 </div>
 <div class="section" id="bug-tracker">
 <h2><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h2>
